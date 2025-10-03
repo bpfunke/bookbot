@@ -4,12 +4,25 @@ def get_book_wc(filepath):
     return len(words)
     
 def get_book_cc(filepath):
-    book_dict = {}
+    char_dict = {}
     with open(filepath) as f:
         book_txt = f.read().lower()
     for txt in list(book_txt):
-        if txt in book_dict:
-            book_dict[txt] += 1
-        else:
-            book_dict[txt] = 1
-    return book_dict
+        char_dict[txt] = char_dict.get(txt, 0) + 1
+    return char_dict
+
+def get_num(items):
+    return items["num"]
+
+
+def sorted_cc (filepath):
+    char_details = {}
+    sorted_char = []
+    char_dict = get_book_cc(filepath)
+    for char in char_dict:
+        if char.isalpha():
+            char_details["char"] = char
+            char_details["num"] = char_dict[char]
+            sorted_char.append(char_details.copy())
+    sorted_char.sort(reverse=True, key=get_num)
+    return sorted_char
